@@ -1,0 +1,25 @@
+name: Build Static Data
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node generate-data.js
+      - name: Commit and Push
+        run: |
+          git config --global user.name "lovegamerod"
+          git config --global user.email "2639105977@qq.com"
+          git add data/
+          git commit -m "Auto-generate static data"
+          git push
